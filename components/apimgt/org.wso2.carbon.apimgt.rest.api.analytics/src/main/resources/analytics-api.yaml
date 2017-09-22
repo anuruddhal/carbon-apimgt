@@ -260,7 +260,7 @@ paths:
         Connection: keep-alive
         Content-Length: 228
         Content-Type: application/json
-        {"count":0,"list":[]}
+        {"count":1,"list":[{"id":"6b065f4c-bb00-48a7-a266-9d64f02c5579","name":"PetStore","version":"1.0.0","provider":"admin","count":3}]}
       security:
         - OAuth2Security:
            - apim:api_graph
@@ -428,7 +428,7 @@ paths:
         Connection: keep-alive
         Content-Length: 228
         Content-Type: application/json
-        {"count":0,"list":[]}
+        {"count":1,"list":[{"id":"68873da6-6b6d-4ffe-8178-bb59734c6aed","name":"PetStore","version":"1.0.0","appName":"TestAPP","createdTime":"2017-09-22T01:24:57.159-05:30","subscriptionTier":"Silver","subscriptionStatus":"ACTIVE"}]}
       security:
         - OAuth2Security:
            - apim:subscription_graph
@@ -626,8 +626,25 @@ definitions:
         example: admin
       context:
         type: string
-        example: admin
-
+        example: store
+      applicationName:
+        type: string
+        example: Test Application
+      userId:
+        type: string
+        example: 01234567-0123-0123-0123-012345678901
+      uriTemplate:
+        type: string
+        example: /admin/test
+      method:
+        type: string
+        example: POST
+      requestCount:
+        type: integer
+        example: 15
+      time:
+        type: string
+        example: 2017-08-27T16:22:27.605-05:30
 #-----------------------------------------------------
 # The TopAPIList resource
 #-----------------------------------------------------

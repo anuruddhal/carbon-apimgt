@@ -38,14 +38,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Implementation class of AnalyticsDAO interface.
+ * Implementation generic methods in AnalyticsDAO interface.
  */
-public class AnalyticsDAOImpl implements AnalyticsDAO {
+public abstract class AnalyticsDAOGenericImpl implements AnalyticsDAO {
 
-    private static final Logger log = LoggerFactory.getLogger(AnalyticsDAOImpl.class);
-
-    public AnalyticsDAOImpl() {
-    }
+    private static final Logger log = LoggerFactory.getLogger(AnalyticsDAOGenericImpl.class);
 
     /**
      * @see AnalyticsDAO#getApplicationCount(Instant, Instant, String)

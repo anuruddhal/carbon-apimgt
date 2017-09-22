@@ -22,6 +22,7 @@ import org.wso2.carbon.apimgt.core.models.analytics.APISubscriptionCount;
 import org.wso2.carbon.apimgt.core.models.analytics.ApplicationCount;
 import org.wso2.carbon.apimgt.core.models.analytics.SubscriptionCount;
 import org.wso2.carbon.apimgt.core.models.analytics.SubscriptionInfo;
+import org.wso2.carbon.apimgt.core.models.analytics.TopAPIInfo;
 
 import java.time.Instant;
 import java.util.List;
@@ -37,7 +38,7 @@ public interface AnalyticsDAO {
      * @param fromTimestamp Filter for from timestamp
      * @param toTimestamp   Filter for to timestamp
      * @param createdBy     Filter for created by
-     * @return valid {@link ApplicationCount} List or null
+     * @return valid {@link ApplicationCount} List
      * @throws APIMgtDAOException if error occurs while accessing data layer
      */
     List<ApplicationCount> getApplicationCount(Instant fromTimestamp, Instant toTimestamp, String createdBy) throws
@@ -49,7 +50,7 @@ public interface AnalyticsDAO {
      * @param fromTimestamp Filter for from timestamp
      * @param toTimestamp   Filter for to timestamp
      * @param createdBy     Filter for created by
-     * @return valid {@link APIInfo} List or null
+     * @return valid {@link APIInfo} List
      * @throws APIMgtDAOException if error occurs while accessing data layer
      */
     List<APIInfo> getAPIInfo(Instant fromTimestamp, Instant toTimestamp, String createdBy) throws APIMgtDAOException;
@@ -60,7 +61,7 @@ public interface AnalyticsDAO {
      * @param fromTimestamp Filter for from timestamp
      * @param toTimestamp   Filter for to timestamp
      * @param createdBy     Filter for API creator
-     * @return valid {@link APIInfo} List or null
+     * @return valid {@link APIInfo} List
      * @throws APIMgtDAOException if error occurs while accessing data layer
      */
     List<APICount> getAPICount(Instant fromTimestamp, Instant toTimestamp, String createdBy) throws APIMgtDAOException;
@@ -71,7 +72,7 @@ public interface AnalyticsDAO {
      * @param fromTime Filter for from timestamp
      * @param toTime   Filter for to timestamp
      * @param apiId    Filter for api Id
-     * @return valid {@link APISubscriptionCount} List or null
+     * @return valid {@link APISubscriptionCount} List
      * @throws APIMgtDAOException if error occurs while accessing data layer
      */
     List<APISubscriptionCount> getAPISubscriptionCount(Instant fromTime, Instant toTime, String apiId) throws
@@ -83,7 +84,7 @@ public interface AnalyticsDAO {
      * @param fromTimestamp Filter for from timestamp
      * @param toTimestamp   Filter for to timestamp
      * @param createdBy     Filter for createdBy
-     * @return valid {@link SubscriptionCount} List or null
+     * @return valid {@link SubscriptionCount} List
      * @throws APIMgtDAOException if error occurs while accessing data layer
      */
     List<SubscriptionCount> getSubscriptionCount(Instant fromTimestamp,
@@ -95,9 +96,20 @@ public interface AnalyticsDAO {
      * @param fromTimestamp Filter for from timestamp
      * @param toTimestamp   Filter for to timestamp
      * @param createdBy     Filter for createdBy
-     * @return valid {@link SubscriptionInfo} List or null
+     * @return valid {@link SubscriptionInfo} List
      * @throws APIMgtDAOException if error occurs while accessing data layer
      */
     List<SubscriptionInfo> getSubscriptionInfo(Instant fromTimestamp, Instant toTimestamp, String createdBy) throws
             APIMgtDAOException;
+
+
+    /**
+     * Retrieves top APIs with highest request count.
+     *
+     * @param filter filter to validate range
+     * @param limit  No of APIs to return
+     * @return valid {@link TopAPIInfo} List
+     * @throws APIMgtDAOException if error occurs while accessing data layer
+     */
+    List<TopAPIInfo> getTopAPIsByTraffic(String filter, int limit) throws APIMgtDAOException;
 }

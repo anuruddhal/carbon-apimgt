@@ -347,18 +347,20 @@ public class DAOFactory {
             throws SQLException, APIMgtDAOException {
         AnalyticsDAO analyticsDAO = null;
         String driverName = connection.getMetaData().getDriverName();
-        if (driverName.contains(MYSQL) || driverName.contains(H2)) {
-            analyticsDAO = new AnalyticsDAOImpl();
+        if (driverName.contains(MYSQL)) {
+            analyticsDAO = new MySqlAnalyticsDAOImpl();
+        } else if (driverName.contains(H2)) {
+            analyticsDAO = new H2AnalyticsDAOImpl();
         } else if (driverName.contains(DB2)) {
 
         } else if (driverName.contains(MS_SQL) || driverName.contains(MICROSOFT)) {
-            analyticsDAO = new AnalyticsDAOImpl();
+            analyticsDAO = new MsSqlAnalyticsDAOImpl();
 
         } else if (driverName.contains(POSTGRE)) {
-            analyticsDAO = new AnalyticsDAOImpl();
+            analyticsDAO = new PostgresAnalyticsDAOImpl();
 
         } else if (driverName.contains(ORACLE)) {
-            analyticsDAO = new AnalyticsDAOImpl();
+            analyticsDAO = new OracleAnalyticsDAOImpl();
         } else {
             throw new APIMgtDAOException("Unhandled DB Type detected");
         }
