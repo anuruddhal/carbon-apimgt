@@ -121,4 +121,10 @@ public class ApiApiServiceImpl extends ApiApiService {
         }
     }
 
+    @Override
+    public Response apiTopApisByTrafficGet(String filter, Integer limit, Request request) throws NotFoundException {
+//        String username = RestApiUtil.getLoggedInUsername(request);
+        return null;
+    }
+
 }

@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiParam;
 import org.wso2.carbon.apimgt.rest.api.analytics.dto.APICountListDTO;
 import org.wso2.carbon.apimgt.rest.api.analytics.dto.APIInfoListDTO;
 import org.wso2.carbon.apimgt.rest.api.analytics.dto.APISubscriptionCountListDTO;
+import org.wso2.carbon.apimgt.rest.api.analytics.dto.TopAPIListDTO;
 import org.wso2.carbon.apimgt.rest.api.analytics.factories.ApiApiServiceFactory;
 
 import org.wso2.msf4j.Microservice;
@@ -48,7 +49,7 @@ public class ApiApi implements Microservice  {
     @Path("/count-over-time")
     @Consumes({ "application/json" })
     @Produces({ "application/json" })
-    @io.swagger.annotations.ApiOperation(value = "Retrieve APIs created over time details ", notes = "Get application created over time details from summarized data. ", response = APICountListDTO.class, authorizations = {
+    @io.swagger.annotations.ApiOperation(value = "Retrieve APIs created over time details ", notes = "Get APIs created over time details from summarized data. ", response = APICountListDTO.class, authorizations = {
         @io.swagger.annotations.Authorization(value = "OAuth2Security", scopes = {
             @io.swagger.annotations.AuthorizationScope(scope = "apim:api_graph", description = "View Graphs Releated to APIs")
         })
@@ -109,5 +110,26 @@ public class ApiApi implements Microservice  {
 , @Context Request request)
     throws NotFoundException {
         return delegate.apiSubscriberCountByApiGet(startTime,endTime,apiId, request);
+    }
+    @GET
+    @Path("/top-apis-by-traffic")
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
+    @io.swagger.annotations.ApiOperation(value = "Retrieve APIs with Most Traffic ", notes = "Retrieve APIs with Most Traffic ", response = TopAPIListDTO.class, authorizations = {
+        @io.swagger.annotations.Authorization(value = "OAuth2Security", scopes = {
+            @io.swagger.annotations.AuthorizationScope(scope = "apim:api_graph", description = "View Graphs Releated to APIs")
+        })
+    }, tags={  })
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 200, message = "OK. Requested APIs created over time information is returned ", response = TopAPIListDTO.class),
+        
+        @io.swagger.annotations.ApiResponse(code = 400, message = "Bad Request. Request paramters attribute does not meet requiremnts. ", response = TopAPIListDTO.class),
+        
+        @io.swagger.annotations.ApiResponse(code = 406, message = "Not Acceptable. The requested media type is not supported ", response = TopAPIListDTO.class) })
+    public Response apiTopApisByTrafficGet(@ApiParam(value = "Filter value for get API details. Values can be DAILY, WEEKLY, MONTHLY, ANNUALLY ",required=true, allowableValues="DAILY, WEEKLY, MONTHLY, ANNUALLY") @QueryParam("filter") String filter
+,@ApiParam(value = "Maximum size of resource array to return. ", defaultValue="25") @DefaultValue("25") @QueryParam("limit") Integer limit
+, @Context Request request)
+    throws NotFoundException {
+        return delegate.apiTopApisByTrafficGet(filter,limit, request);
     }
 }

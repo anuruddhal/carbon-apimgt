@@ -153,7 +153,7 @@ public class AnalyzerImplTestCase {
     }
 
     @Test(description = "Get Subscription Info test")
-    public void testGetSubscrptionInfo() throws APIManagementException {
+    public void testGetSubscriptionInfo() throws APIManagementException {
         AnalyticsDAO analyticsDAO = Mockito.mock(AnalyticsDAO.class);
         SubscriptionInfo subscriptionInfo = new SubscriptionInfo();
         List<SubscriptionInfo> subscriptionInfos = new ArrayList<>();
@@ -179,7 +179,7 @@ public class AnalyzerImplTestCase {
     }
 
     @Test(description = "Get Subscription count for API test")
-    public void testGetAPISubscrptionCount() throws APIManagementException {
+    public void testGetAPISubscriptionCount() throws APIManagementException {
         AnalyticsDAO analyticsDAO = Mockito.mock(AnalyticsDAO.class);
         APISubscriptionCount apiSubscriptionCount = new APISubscriptionCount();
         List<APISubscriptionCount> apiSubscriptionCountList = new ArrayList<>();

@@ -156,7 +156,7 @@ paths:
       summary: |
         Retrieve APIs created over time details
       description: |
-        Get application created over time details from summarized data.
+        Get APIs created over time details from summarized data.
       parameters:
         - $ref: '#/parameters/startTime'
         - $ref: '#/parameters/endTime'
@@ -181,6 +181,60 @@ paths:
           description: |
             Not Acceptable.
             The requested media type is not supported
+
+#-----------------------------------------------------
+#  Retrieve APIs with Most Traffic
+#-----------------------------------------------------
+
+  /api/top-apis-by-traffic:
+    get:
+      x-wso2-curl: |
+        curl -k -H \"Authorization: Bearer ae4eae22-3f65-387b-a171-d37eaa366fa8\"
+        https://localhost:9292/api/am/analytics/v1.0/api/top-apis-by-traffic?from=2017-05-30%2012:32:41.972&to=2017-07-30%202:32:41.972&created_by=admin&subscribed_to=TestAPI
+      x-wso2-request: |
+        GET /api/am/analytics/v1.0/api/top-apis-by-traffic?startTime=2017-05-20T16%3A22%3A27.605Z&endTime=2017-10-27T16%3A22%3A27.605-05%3A30&createdBy=admin HTTP/1.1
+        Host: localhost:9292
+        accept: application/json
+        authorization: Bearer b6b8d5ab-1118-362d-a6a9-2233956d80a0
+        cache-control: no-cache
+        content-type: application/json
+      x-wso2-response: |
+        HTTP/1.1 200 OK
+        Connection: keep-alive
+        Content-Length: 112
+        Content-Type: application/json
+        {"count":2,"list":[{"time":"2017-09-11T09:55:49.204Z","count":1},{"time":"2017-09-12T11:34:56.560Z","count":2}]}
+      security:
+        - OAuth2Security:
+           - apim:api_graph
+      summary: |
+        Retrieve APIs with Most Traffic
+      description: |
+        Retrieve APIs with Most Traffic
+      parameters:
+        - $ref: '#/parameters/limit'
+        - $ref: '#/parameters/filter'
+      responses:
+        200:
+          description: |
+            OK.
+            Requested APIs created over time information is returned
+          headers:
+            Content-Type:
+              description: |
+                The content type of the body.
+              type: string
+          schema:
+            $ref: '#/definitions/TopAPIList'
+        400:
+          description: |
+            Bad Request.
+            Request paramters attribute does not meet requiremnts.
+        406:
+          description: |
+            Not Acceptable.
+            The requested media type is not supported
+
 
 #-----------------------------------------------------
 #  Retrieve API subscriber count details
@@ -445,6 +499,26 @@ parameters:
     required: false
     type: string
 
+  filter:
+    name: filter
+    in: query
+    description: |
+     Filter value for get API details. Values can be DAILY, WEEKLY, MONTHLY, ANNUALLY
+    enum:
+      - DAILY
+      - WEEKLY
+      - MONTHLY
+      - ANNUALLY
+    required: true
+    type: string
+
+  limit:
+    name: limit
+    in: query
+    description: |
+      Maximum size of resource array to return.
+    default: 25
+    type: integer
 
 ######################################################
 # The resources used by some of the APIs above within the message body
@@ -534,6 +608,50 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/APICount'
+
+#-----------------------------------------------------
+# The TopAPIInfo resource
+#-----------------------------------------------------
+  TopAPIInfo:
+    title: Top API information resource
+    properties:
+      id:
+        type: string
+        example: 01234567-0123-0123-0123-012345678901
+      version:
+        type: string
+        example: 1.0.0
+      publisher:
+        type: string
+        example: admin
+      context:
+        type: string
+        example: admin
+
+#-----------------------------------------------------
+# The TopAPIList resource
+#-----------------------------------------------------
+  TopAPIList:
+    title: TopAPIList List
+    properties:
+      count:
+        type: integer
+        description: |
+          Number of APIs.
+      next:
+        type: string
+        description: |
+          Link to the next subset of resources qualified.
+          Empty if no more resources are to be returned.
+      previous:
+        type: string
+        description: |
+          Link to the previous subset of resources qualified.
+          Empty if current subset is the first subset returned.
+      list:
+        type: array
+        items:
+          $ref: '#/definitions/TopAPIInfo'
 #-----------------------------------------------------
 # The API Info resource
 #-----------------------------------------------------

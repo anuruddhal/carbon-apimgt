@@ -101,4 +101,16 @@ public interface Analyzer {
     List<SubscriptionInfo> getSubscriptionInfo(Instant fromTime, Instant toTime, String createdBy) throws
             APIManagementException;
 
+//    /**
+//     * Retrieves Top APIs with most traffic
+//     *
+//     * @param filter
+//     * @param limit
+//     * @return
+//     * @throws APIManagementException
+//     */
+//    List<SubscriptionInfo> getTopAPIsByTraffic(int limit, String filter) throws
+//            APIManagementException;
+
+
 }
